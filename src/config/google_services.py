@@ -1,5 +1,5 @@
 import pickle
-from os import path
+from os.path import dirname, join, abspath, exists
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient import errors
@@ -14,12 +14,12 @@ SCOPES = ["https://www.googleapis.com/auth/drive.file",
 
 creds = None
 
-app_root = path.dirname(path.abspath(__file__))
-app_token = path.join(app_root, "token.pickle")
-app_credentials = path.join(app_root,'credenciales.json')
+app_root = dirname(abspath(__file__))
+app_token = join(app_root, "token.pickle")
+app_credentials = join(app_root,'credenciales.json')
 
 
-if path.exists(app_token):
+if exists(app_token):
     with open(app_token, "rb") as token:
         creds = pickle.load(token)
 

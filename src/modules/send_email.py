@@ -6,9 +6,34 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
+from src.config import email_name as from_Email, email_template as template, year, edition, next_edition, next_year, public_pwd_for_file 
+
+def create_message(to_Email, name, genre, drive_link):
+    message = MIMEMultipart()
+    message['From'] = from_Email
+    message['To'] = to_Email
+    message['Subject'] = f'CIMPS 20{year}: Constancia de Asistencia'
+
+    refer_as = 'Estimad'
+    if genre == 'male':
+        refer_as += 'o'
+    else:
+        refer_as += 'a'
+    message_template = open(template).read().format(refer_as, name, edition, year, next_edition, next_year, public_pwd_for_file, drive_link)
+    message.attach(MIMEText(message_template,'html'))
+
+def content(user, path, url):
+    to_Email = user['Email']
+    filename = user['Nombre_Archivo']
+    message = MIMEMultipart(MIMEText("""
+    
+    """))
+
+
 #load information to generate document
 
-def consulta():
+def consulta(user, path ):
+
     if cnxn!=False:
         with cnxn.cursor() as cursor:
             query="""
@@ -50,24 +75,7 @@ def send_email(user):
         saludo='Estimada'
     # Agregamos el cuerpo del mensaje como objeto MIME de tipo texto
     mensaje.attach(MIMEText(f"""
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-<p>{saludo} {user['Nombre'].upper()}</p>
-<p>Agradecemos su participación en la 9na Edición del CIMPS 2020.</p>
-<p>Esperamos contar con su participación para la 10ma, edición del CIMPS 2021, que será llevada a cabo del 20-22 de Octubre del 2021 con sede en la Ciudad de Torreón Coahuila. Si la sindemia del COVID permite realizar actividades presenciales será anunciada a través de las páginas y redes sociales del CIMPS.</p>
-<p>No olvide visitar las paginas oficiales: cimps.cimat.mx y facebook/cimps</p>
-<p>Adjuntamos su constancia de asistencia, para poder visualizar la constancia y/o realizar una impresión de esta debera utilizar la siguiente contraseña: <strong>#CiMPS_2020</strong></p>
-<p>Tambien puede descargar la constancia a través del siguiente <a href="{user['Url']}">enlace</a></p>
-<p>Saludos</p>
-<p>Comité CIMPS</p>
-</body>
-</html>    
+    
 
     """, 'html'))
     
