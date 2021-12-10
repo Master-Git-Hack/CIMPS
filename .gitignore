@@ -3,3 +3,6 @@ env
 .DS_Store
 token.pickle
 credentials.json
+src/temp/*.pdf
+src/temp/*.pptx
+src/temp/*.tmp
