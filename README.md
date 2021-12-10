@@ -33,7 +33,6 @@ Elements you need to check:
 
 You need the following environment variables to run script:
 ```
-CREDENTIALS = ''
 DRIVE_FOLDER_ID = ''
 EMAIL_NAME = 'test@example.com'
 EMAIL_PWD = test

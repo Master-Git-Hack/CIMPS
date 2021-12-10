@@ -11,7 +11,7 @@ def send_email(message,to_Email):
         smtp_session.login(user,pwd)
 
         # Send email
-        smtp_session.sendmail(user, to_Email, message)
+        smtp_session.sendmail(user, to_Email, message.as_string())
         
         # Finish server connection
         smtp_session.quit() 

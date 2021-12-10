@@ -16,7 +16,7 @@ creds = None
 
 app_root = dirname(abspath(__file__))
 app_token = join(app_root, "token.pickle")
-app_credentials = join(app_root,'credenciales.json')
+app_credentials = join(app_root,'credentials.json')
 
 
 if exists(app_token):

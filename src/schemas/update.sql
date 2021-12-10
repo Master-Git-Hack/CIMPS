@@ -1,0 +1,1 @@
+UPDATE {{tabla}} SET {{columna}} = {{valor}} WHERE {{columna}} = {{valor}};

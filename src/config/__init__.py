@@ -1,16 +1,13 @@
-from dotenv import load_env
+from dotenv import load_dotenv
 from os import getenv, getcwd
-load_env()
+load_dotenv()
 
 #Templates paths
 email_template = f'{getcwd()}/src/templates/message.html'
 certificate_template = f'{getcwd()}/src/templates/certificate.pptx'
+temPath = f'{getcwd()}/src/temp/'
 
-# Google Drive API
-if getenv('CREDENTIALS'):
-    credenciales = getenv('CREDENTIALS')
-else:
-    print('No Credentials for API found.')
+# Google Drive paths
 
 if getenv('DRIVE_FOLDER_ID'):
     drive_folder_id = getenv('DRIVE_FOLDER_ID')
