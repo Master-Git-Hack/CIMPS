@@ -4,7 +4,7 @@ from email.mime.base import MIMEBase
 from email import encoders
 from jinja2 import Template
 
-from src.config import email_name as from_Email, email_template as template, year, edition, next_edition, next_year, public_pwd_for_file, temPath
+from src.config import email_name as from_Email, email_template as template, year, edition, next_edition, next_year, public_pwd_for_file, temPath, ciudad_sede, estado_sede, cimps_inicio, cimps_termino
 
 from src.config.email_services import send_email
 
@@ -25,6 +25,10 @@ def create_message(data):
                 YEAR = year, 
                 NEXT_EDITION = next_edition, 
                 NEXT_YEAR = next_year, 
+                CIUDAD = ciudad_sede,
+                ESTADO = estado_sede,
+                INICIO=cimps_inicio,
+                TERMINO=cimps_termino,
                 PWD = public_pwd_for_file,
                 LINK = data['Link']
             )}""",

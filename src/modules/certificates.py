@@ -20,11 +20,12 @@ def create(data):
     )
     template = writeParagraphs(content,template)
     filename = data['id_constancia']
-    template.save(f'{temPath}/{filename}.pptx')
-    if pptx2pdf(filename, data['id_constancia']):
-        return f'{filename}.pdf'
-    else:
-        return False
+    template.save(f'{temPath}{filename}.pptx')
+    #if pptx2pdf(filename, data['id_constancia']):
+    #    return f'{filename}.pdf'
+    #else:
+    #    return False
+    return filename
 
 def writeParagraphs(content, template):
     for idx in content['paragraphs']:

@@ -7,6 +7,7 @@ from pandas import read_excel, isna
 from numpy import nan
 from random import randrange as rg
 
+
 # function to read excel file
 def getXLSXinfo():
     certificates = read_excel(open('src/schemas/Becas.xlsx', 'rb'), sheet_name = 'Sheet 1', converters = {'idx:int'}, index_col = [0])
@@ -32,7 +33,7 @@ def elements2change(nombre = 'John Doe', puesto = 'Asistente', lugar = False, ti
         'font' :  'Calibri',
         'color' : RGBColor(136,0,0),
         'bold' : True,
-        'size' : 27,
+        'size' : 32 if len(nombre) <= 30 else 24,
         'isFragmented' : {
             2 : False,
             3 : True,
@@ -41,13 +42,13 @@ def elements2change(nombre = 'John Doe', puesto = 'Asistente', lugar = False, ti
         'text_fragmented':{
             3:{
                 'paragraphs':{
-                    1 : 'Por su valiosa participación como' + ('' if title == False else ':'), 
+                    1 : 'Por su valiosa participación ' + ('' if title == False else 'como:'), 
                     2 : f' {puesto.upper()} ' if title != False else '',
-                    3 : f'en el Congreso Internacional CIMPS 20{year} ' if title != False else '',
-                    4 : f'{"en el " if lugar != False else ""}',
+                    3 : f'en el Congreso Internacional CIMPS 20{year} ' if title == False else '',
+                    4 : f'{"en el " if lugar != False else "como: "}',
                     5 : f'{lugar if lugar != False else ""}' 
                 },
-                'font' : 'Calibri (Body)',
+                'font' : 'Calibri',
                 'bold': {
                     1 : False,
                     2 : True,
@@ -78,14 +79,31 @@ def pptx2pdf(filename, email):
             print('OS name not detected or supported')
 
     if action:
-        call(['mv', f'{certificate}.pdf', f'{certificate}-tmp.pdf'])
+        #call(['mv', f'{certificate}.pdf', f'{certificate}-tmp.pdf'])
 
-        call(['rm', f'{certificate}.pptx'])
+        #call(['rm', f'{certificate}.pptx'])
 
-        call(['pdftk', f'{certificate}-tmp.pdf', 'cat', 'output', f'{certificate}.pdf', 'owner_pw', f'#{public_pwd_for_file}_{email}_{rg(10)}', 'allow', 'printing'])
+        #call(['pdftk', f'{certificate}-tmp.pdf', 'cat', 'output', f'{certificate}.pdf', 'owner_pw', f'#{public_pwd_for_file}_{email}_{rg(10)}', 'allow', 'printing'])
 
-        call(['rm', f'{certificate}-tmp.pdf'])
+        #call(['rm', f'{certificate}-tmp.pdf'])
         
         return True
     else:
         return False
+
+
+def protect_pdf(certificate,email):
+
+    call(['mv', f'{certificate}.pdf', f'{certificate}-tmp.pdf'])
+    
+    call(['pdftk', f'{certificate}-tmp.pdf', 'cat', 'output', f'{certificate}.pdf', 'owner_pw', f'#{public_pwd_for_file}_{email}_{rg(10)}', 'allow', 'printing'])
+
+    call(['rm', f'{certificate}-tmp.pdf'])
+
+    call(['rm', f'{certificate}.pptx'])
+    return True
+
+def end_process(filename):
+    certificate = f'{temPath}{filename}'
+    call(['rm', f'{certificate}.pdf'])
+    return True

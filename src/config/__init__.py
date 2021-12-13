@@ -75,3 +75,24 @@ if getenv('PWD_FILE'):
 else:
     print('No PWD FILE information found')
 
+if getenv('CIMPS_CIUDAD_SEDE'):
+    ciudad_sede = getenv('CIMPS_CIUDAD_SEDE')
+else:
+    print('No ciudad sede information found')
+
+if getenv('CIMPS_ESTADO_SEDE'):
+    estado_sede = getenv('CIMPS_ESTADO_SEDE')
+else:
+    print('No estado sede information found')
+
+if getenv('CIMPS_INICIO'):
+    cimps_inicio = getenv('CIMPS_INICIO')
+else:
+    print('No cimps inicio information found')
+
+if getenv('CIMPS_TERMINO'):
+    cimps_termino = getenv('CIMPS_TERMINO')
+else:  
+    print('No cimps termino information found')
+    
+
