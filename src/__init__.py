@@ -2,20 +2,24 @@ from .Certificates import Certificates
 from .Database import Database
 from .Drive import Drive
 from .Email import Email
+from .utils import get_xlxs_data
 
 
-def main(schema: str = "assistance") -> None:
+def main(schema: str = "assistance", from_file: bool = False) -> None:
     """Main function to run the program"""
-    db = Database(schema=schema)
-    data = db.get()
+    if from_file:
+        db = Database(schema=schema)
+        data = db.get()
+    else:
+        data = get_xlxs_data(f"{schema}.xlsx", "Hoja1", "Numero")
     print(len(data))
-    cert = Certificates()
+    cert = Certificates(schema)
     drive = Drive()
     email = Email()
     for row in data:
         _filename = cert.create(row)
         _to_email = row["email"]
-        _link = drive.upload(_filename, _to_email)
+        _link = drive.upload(_filename)
         if _link is not None:
             if email.send(
                 data=dict(
@@ -27,4 +31,4 @@ def main(schema: str = "assistance") -> None:
                 to_email=_to_email,
             ):
                 print(f"Done for: {row['id_constancia']}")
-                cert.end_process(_filename)
+                cert.clean_path()

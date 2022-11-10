@@ -20,7 +20,6 @@ class _Paths:
     token = join(app_root, "token.pickle")
     credentials = join(app_root, "credentials.json")
 
-
 class Config:
     """class to get the environment variables\
 and set variables to use in the project
@@ -33,8 +32,8 @@ and set variables to use in the project
     public_password_for_file = getenv(
         "PUBLIC_PASSWORD_FOR_FILE", f"CIMPS {current_edition}"
     )
-    ciudad_sede = getenv("CIMPS_CIUDAD_SEDE", "Zacatecas")
-    estado_sede = getenv("CIMPS_ESTADO_SEDE", "Zacatecas")
-    cimps_inicio = getenv("CIMPS_INICIO", None)
-    cimps_termino = getenv("CIMPS_TERMINO", None)
+    ciudad_sede = getenv("CIMPS_CITY_SITE", "Zacatecas")
+    estado_sede = getenv("CIMPS_STATE_SITE", "Zacatecas")
+    cimps_inicio = getenv("CIMPS_START_DATE", None)
+    cimps_termino = getenv("CIMPS_END_DATE", None)
     paths = _Paths()

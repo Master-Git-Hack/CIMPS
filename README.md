@@ -9,7 +9,9 @@ Elements you need install:
 - PDFTK.
 - Libre Office.
 - Typoghrapy used at certificates.
+- Drive API Credentials from Google Cloud Platform.
 - MySQL.
+- Email account must reduce security to allow access from less secure apps.
 - Python requirements text file.
 
 Just in case you don't know how to install requirements text file.
@@ -18,7 +20,6 @@ Just need to type at the terminal the following command.
 source env/bin/activate &&
 pip install requirements.txt &&
 deactivate
-
 ```
 
 Elements you need to check:
@@ -26,7 +27,7 @@ Elements you need to check:
 - Once Installed you need access to google drive API, and authorize your account.
 - After that you need to create a Backup to DB used or updated to create the certificates.
 - Next, you need to update the query to get the recent information.
-- And you need to map the elements at the certertificate, which element correspond to the information you need to show.
+- And you need to map the elements at the certificate, which element correspond to the information you need to show.
 - Finally check the folder id in case you need to upload files at drive, and the pwd of email account is the same, otherwise update it.
 
 ## ENV file settings

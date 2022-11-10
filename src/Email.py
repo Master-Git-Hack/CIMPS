@@ -16,7 +16,7 @@ class Email(Config):
     """class to handle the email variables"""
 
     _email = getenv("EMAIL", None)
-    _password = getenv("PASSWORD", None)
+    _password = getenv("EMAIL_PASSWORD", None)
     _message = None
 
     def __init__(self):

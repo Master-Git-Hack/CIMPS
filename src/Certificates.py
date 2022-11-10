@@ -20,9 +20,13 @@ class Certificates(_Config):
     _filename = None
     _drive = Drive()
     _local_command = dict(Linux="libreoffice", Darwin="soffice")
+    _schema = "assistance"
 
-    def __init__(self) -> None:
-        self._template = Presentation(self.paths.certificate_template)
+    def __init__(self, schema: str = None) -> None:
+
+        if schema is not None:
+            self._schema = schema
+        self._template = Presentation(join(self.paths.schemas, f"{self._schema}.pptx"))
 
     def create(self, data: dict) -> str:
         """function to create the certificates
@@ -170,30 +174,45 @@ class Certificates(_Config):
         )
 
     def _write_paragraphs(self, data: dict) -> None:
-        for idx in data["paragraphs"]:
-            _certificate = self._template.slides[0].shapes[0].shapes[idx].text_frame
+        if self._schema == "commite":
+            _certificate = self._template.slides[0].shapes[2].text_frame
             _certificate.clear()
             _certificate.alignment = PP_ALIGN.CENTER
             _certificate = _certificate.paragraphs[0]
-            if data["isFragmented"][idx]:
-                references = data["text_fragmented"][idx]
-                for fragment in references["paragraphs"]:
-                    paragraph_fragment = self._text_style(
+            _paragraph = self._text_style(
+                insert=_certificate.add_run(),
+                is_bold=True,
+                size=20,
+                font_name="Calibri",
+                color=RGBColor(0, 0, 0),
+            )
+            _paragraph.text = data["Nombre"]
+
+        if self._schema == "assistance":
+            for idx in data["paragraphs"]:
+                _certificate = self._template.slides[0].shapes[0].shapes[idx].text_frame
+                _certificate.clear()
+                _certificate.alignment = PP_ALIGN.CENTER
+                _certificate = _certificate.paragraphs[0]
+                if data["isFragmented"][idx]:
+                    references = data["text_fragmented"][idx]
+                    for fragment in references["paragraphs"]:
+                        paragraph_fragment = self._text_style(
+                            insert=_certificate.add_run(),
+                            is_bold=True,
+                            size=20,
+                            font_name="Calibri",
+                            color=RGBColor(0, 0, 0),
+                        )
+                        paragraph_fragment.text = data["text_fragmented"][idx][
+                            "paragraphs"
+                        ][fragment]
+                else:
+                    paragraph = self._text_style(
                         insert=_certificate.add_run(),
                         is_bold=references["bold"][fragment],
                         size=references["size"],
                         font_name=references["font"],
                         color=references["color"],
                     )
-                    paragraph_fragment.text = data["text_fragmented"][idx][
-                        "paragraphs"
-                    ][fragment]
-            else:
-                paragraph = self._text_style(
-                    insert=_certificate.add_run(),
-                    is_bold=references["bold"][fragment],
-                    size=references["size"],
-                    font_name=references["font"],
-                    color=references["color"],
-                )
-                paragraph.text = data["paragraphs"][idx]
+                    paragraph.text = data["paragraphs"][idx]
