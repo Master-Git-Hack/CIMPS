@@ -16,7 +16,7 @@ def create(data):
         puesto = data['puesto'] if 'puesto' in data else 'Asistente',
         lugar = data['lugar'] if 'lugar' in data else False,
         title = data['titulo'] if 'titulo' in data else False,
-        year = data['anio'] if 'anio' in data else 21,
+        year = data['anio'] if 'anio' in data else 21
     )
     template = writeParagraphs(content,template)
     filename = data['id_constancia']

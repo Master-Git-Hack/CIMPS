@@ -12,8 +12,8 @@ def schemas(type = 'assistance'):
             print('Type not specified')
             return False
 
-def get(type):
-    query = schemas(type)
+def get_assistance():
+    query = open('src/schemas/assistance.sql').read()
     if cnxn != False and query != False:
         with cnxn.cursor() as cursor:
             cursor.execute(query)
@@ -31,6 +31,26 @@ def get(type):
                     'cimps_ed':row['texto4'],
                     'email':row['email'],
                 })
+            return data 
+
+def get_workshops():
+    query = open('src/schemas/workshops.sql').read()
+    if cnxn != False and query != False:
+        with cnxn.cursor() as cursor:
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            data = []
+            for row in rows:
+                if row['id']!=1:
+                    data.append({
+                        'id_constancia':row['id'],
+                        'nombre':row['name'],
+                        'genero':row['gender'],
+                        'email':row['email'],
+                        'lugar':'taller',
+                        'puesto':'Asistente',
+                        'titulo':row['taller']
+                    })
             return data 
 
 def update(data,filename,url):

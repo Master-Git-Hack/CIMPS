@@ -12,7 +12,7 @@ def create_message(data):
     message = MIMEMultipart()
     message['From'] = f'CIMPS<{from_Email}>'
     message['To'] = data['Email']
-    message['Subject'] = f'CIMPS 20{year}: Constancia de Asistencia'
+    message['Subject'] = f'CIMPS 20{year}: Constancia de Asistencia del taller {data["Taller"]}'
 
     
     message_template = Template(open(template).read())

@@ -6,6 +6,7 @@ from subprocess import call
 from pandas import read_excel, isna
 from numpy import nan
 from random import randrange as rg
+from math import ceil
 
 
 # function to read excel file
@@ -24,16 +25,24 @@ def textStyle(insert, size = 10, isBold = False, fontName = 'Montserrat', color 
 
 def elements2change(nombre = 'John Doe', puesto = 'Asistente', lugar = False, title = False, year = 21):
     #every index represent a value to change, example: at index 2 it changes name value at certificate
+    title = title.split(' ')
+    new_title = ''
+    for idx, word in enumerate(title):
+        if idx == ceil(len(title)/2):
+            new_title += f'\n'
+        else:
+            new_title += f'{word} '
+    title = new_title.split('.')[0]
     return {
         'paragraphs' : {
             2 : f'{nombre.upper()}',
             3 : '',
-            4 : f'{title.upper() if title != False else puesto.upper() }',
+            4 : f'{title.upper()}',
         },
         'font' :  'Calibri',
         'color' : RGBColor(136,0,0),
         'bold' : True,
-        'size' : 32 if len(nombre) <= 30 else 24,
+        'size' : 26,
         'isFragmented' : {
             2 : False,
             3 : True,
@@ -42,11 +51,11 @@ def elements2change(nombre = 'John Doe', puesto = 'Asistente', lugar = False, ti
         'text_fragmented':{
             3:{
                 'paragraphs':{
-                    1 : 'Por su valiosa participación ' + ('' if title == False else 'como:'), 
-                    2 : f' {puesto.upper()} ' if title != False else '',
-                    3 : f'en el Congreso Internacional CIMPS 20{year} ' if title == False else '',
-                    4 : f'{"en el " if lugar != False else "como: "}',
-                    5 : f'{lugar if lugar != False else ""}' 
+                    1 : 'Por su valiosa participación como: ', 
+                    2 : f'Asistente',
+                    3 : f' en el Congreso Internacional\n CIMPS 20{year} ',
+                    4 : "en el ",
+                    5 : f'{lugar}:\n' 
                 },
                 'font' : 'Calibri',
                 'bold': {
